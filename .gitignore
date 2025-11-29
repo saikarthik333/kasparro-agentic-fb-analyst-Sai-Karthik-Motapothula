@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+.env
+.DS_Store
+logs/*.json
+reports/*.json
+reports/*.md
+!reports/.gitkeep
