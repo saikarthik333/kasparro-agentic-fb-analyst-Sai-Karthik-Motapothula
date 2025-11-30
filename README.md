@@ -1,60 +1,115 @@
-## 🚀 Overview
-An autonomous Multi-Agent System designed to diagnose Facebook Ads performance.
-It uses a **Planner-Executor-Evaluator** architecture to break down high-level queries (e.g., "Why did ROAS drop?") into actionable insights and creative recommendations.
+# Kasparro — Agentic Facebook Performance Analyst
+
+**An autonomous Multi-Agent System designed to diagnose Facebook Ads performance, identify trends, and generate data-backed creative recommendations.**
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![LangChain](https://img.shields.io/badge/LangChain-v0.1-green)
+![Status](https://img.shields.io/badge/Status-Submission%20Ready-brightgreen)
+
+---
 
 ## 🏗️ Architecture
-The system consists of 5 specialized agents:
-1. **Planner Agent:** Decomposes the user query into a logical execution plan.
-2. **Data Agent:** Interfaces with the CSV dataset to extract quantitative metrics.
-3. **Insight Agent:** Analyzes trends to form hypotheses (e.g., "Creative Fatigue").
-4. **Evaluator Agent:** Validates hypotheses against statistical evidence.
-5. **Creative Generator:** Generates new high-performance ad copy based on winning patterns.
+
+The system utilizes a **Planner-Executor-Evaluator** architecture where specialized agents collaborate to solve the user's query.
+
+```ascii
+User Query 
+    │
+    ▼
+[ 🧠 Planner Agent ] ───> Breaks query into execution steps
+    │
+    ├── [ 📊 Data Agent ] ──────> Extracts stats (Spend, ROAS, CTR) from CSV
+    │
+    ├── [ 🧐 Insight Agent ] ───> Analyzes trends & forms hypotheses (e.g., "Creative Fatigue")
+    │
+    ├── [ ⚖️ Evaluator Agent ] ─> Validates hypotheses against data evidence
+    │
+    └── [ 🎨 Creative Gen ] ────> Generates new Ad Copy for underperforming assets
+    │
+    ▼
+[ 📄 Final Report ] ───> JSON Insights + Markdown Summary
+```
+
+## 🚀 Quick Start
+
+### 1. Prerequisites
+   
+  Python 3.10 or higher
+
+  A valid OpenAI API Key
+
+### 2. Installation
+```
+# 1. Clone the repository
+git clone <https://github.com/saikarthik333/kasparro-agentic-fb-analyst-Sai-Karthik-Motapothula>
+cd kasparro-agentic-fb-analyst-Sai-Karthik-Motapothula
+
+# 2. Create and activate virtual environment
+python -m venv .venv
+# Windows:
+.venv\Scripts\activate
+# Mac/Linux:
+source .venv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+```
+
+### 3. Configuration
+Create a .env file in the root directory:
+```
+OPENAI_API_KEY=sk-your-key-here
+LANGFUSE_PUBLIC_KEY=pk-lf-... (Optional for tracing)
+LANGFUSE_SECRET_KEY=sk-lf-... (Optional for tracing)
+```
+4. Run the Analysis
+Execute the main orchestrator with a query:
+```
+python -m src.run "Why did ROAS drop last week for the ComfortMax campaign?"
+```
+## ⚙️ Features & Engineering Decisions
+### 1. Robust "Mock/Offline" Mode
+To ensure system stability and cost-efficiency during development, the agents are equipped with a Fallback Layer.
+
+Live Mode: If a valid API key with quota is detected, agents use GPT-3.5/4 to reason dynamically.
+
+Mock Mode: If the API returns Rate Limit (429) or Connection errors, the system automatically switches to deterministic mock data. This allows the pipeline to be tested end-to-end without fragility.
+
+### 2. Modularity
+Prompts as Code: All LLM prompts are stored in prompts/*.md to separate logic from instruction.
+
+Configurable Thresholds: Sensitivity for "Low CTR" or "ROAS Drop" is managed in config/config.yaml.
 
 ## 📂 Project Structure
-```text
+```
+
 ├── config/             # Configuration (Thresholds, LLM settings)
-├── data/               # Datasets
-├── prompts/            # Raw prompt files (Markdown)
-├── reports/            # Generated Outputs (Markdown Report, JSON)
+├── data/               # Datasets (synthetic_fb_ads_undergarments.csv)
+├── prompts/            # Markdown prompt templates
+├── reports/            # Generated outputs
+│   ├── report.md       # Final human-readable analysis
+│   ├── insights.json   # Machine-readable findings
+│   └── creatives.json  # AI-generated ad copy
 ├── src/
-│   ├── agents/         # Individual Agent Logic
-│   └── utils/          # Helper functions
+│   ├── agents/         # Individual Agent Logic (Planner, Insight, etc.)
+│   └── utils/          # Helper functions (Prompt loaders)
 ├── tests/              # Unit tests
 ├── run.py              # Main Entry Point
 └── requirements.txt    # Dependencies
-🛠️ Quick Start
-1. Setup Environment
-Bash
+```
+## 📊 Example Output
+After running the script, check the reports/ folder.
 
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-2. Configure Credentials
-Create a .env file:
+Snippet from reports/report.md:
 
-Plaintext
+Diagnosis: ROAS dropped by 15% due to a decline in CTR. Hypothesis: Creative Fatigue: The current ad visuals are no longer engaging the audience. Recommended 
 
-OPENAI_API_KEY=sk-...
-LANGFUSE_PUBLIC_KEY=pk-...
-LANGFUSE_SECRET_KEY=sk-...
-3. Run Analysis
-Bash
+Action: Launch new creatives focused on the "Comfort & Durability" angle.
 
-python -m src.run "Why did the Men ComfortMax campaign ROAS drop last week?"
-📊 Outputs
-After execution, check the reports/ folder:
-
-report.md: A human-readable summary of the findings.
-
-insights.json: Structured data for downstream systems.
-
-creatives.json: Generated ad copy variations.
-
-🧪 Testing
-Run the test suite:
-
-Bash
-
+## 🧪 Testing
+Run the test suite to verify data loading and agent initialization:
+```
 pytest tests/
-
-## Status: Submitted
+```
+## 📜 License
+Internal Assignment for Kasparro AI.
