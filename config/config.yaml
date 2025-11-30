@@ -1,0 +1,17 @@
+app:
+  name: "Kasparro Agentic Analyst"
+  version: "1.0.0"
+  environment: "production"
+
+llm:
+  model: "gpt-3.5-turbo"
+  temperature: 0.2
+  max_retries: 3
+
+data:
+  path: "data/synthetic_fb_ads_undergarments.csv"
+  date_format: "%Y-%m-%d"
+
+thresholds:
+  ctr_low: 0.01  # 1%
+  roas_drop_alert: 0.15 # 15% drop triggers alert
