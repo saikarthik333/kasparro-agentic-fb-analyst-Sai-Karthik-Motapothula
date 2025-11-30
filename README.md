@@ -1,4 +1,4 @@
-# Kasparro — Agentic Facebook Performance Analyst
+# Kasparro - Agentic Facebook Performance Analyst
 
 **An autonomous Multi-Agent System designed to diagnose Facebook Ads performance, identify trends, and generate data-backed creative recommendations.**
 
@@ -111,5 +111,14 @@ Run the test suite to verify data loading and agent initialization:
 ```
 pytest tests/
 ```
+---
+
+**Author:** Motapothula Sai Karthik
+
+**LinkedIn:** [saikarthik333](https://www.linkedin.com/in/saikarthik333/) \
+**GitHub:** [saikarthik333](https://github.com/saikarthik333) \
+**Email:**[saikarthikmotapothula333@gmail.com](mailto:saikarthikmotapothula333@gmail.com)
+
+---
 ## 📜 License
 Internal Assignment for Kasparro AI.
